@@ -8,6 +8,5 @@ let userSchema = new mongoose.Schema({
     time_zone: String,
     shift: String,
     holiday_group: String,
-    
 });
 module.exports = mongoose.model('users', userSchema);

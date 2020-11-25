@@ -32,7 +32,7 @@ const Projects = () => {
                                         {/* <span className="digit"><img src="assets/images/projectavatar_04.svg" alt="L"/></span> */}
 
                                         <span><h4><strong><Link to={`/projectDetails/${project._id}`}>{project.project_name}</Link></strong></h4></span>
-                                        <span className="text-light">Software Project</span>
+                                        {/* <span className="text-light">Software Project</span> */}
 
                                     </div>
                                 </div>
