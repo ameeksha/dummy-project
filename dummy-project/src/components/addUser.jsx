@@ -6,8 +6,7 @@ const AddUser = (props) => {
 
   const [state, setState] = useState({
     project_id: props.projectId,
-    first_name: '',
-    last_name: '',
+    name: '',
     email_address: '',
     time_zone: '',
     shift: '',
@@ -28,8 +27,7 @@ const AddUser = (props) => {
       })
     setState({
       project_id: '',
-      first_name: '',
-      last_name: '',
+      name: '',
       email_address: '',
       time_zone: '',
       shift: '',
@@ -60,18 +58,20 @@ const AddUser = (props) => {
                     <form onSubmit={submitHandler}>
 
 
+
                       <input type="hidden" formControlName="project_id" className="form-control" name="state[project_id]" value={state.project_id} onChange={e => setState({ ...state, project_id: e.target.value })} />
+
 
                       <div className="form-row">
 
-                        <div className="form-group col-xl-6">
-                          <label className="text-secondary"><strong>FIRST NAME</strong></label>
-                          <input type="text" formControlName="first_name" className="form-control" name="state[first_name]" value={state.first_name} onChange={e => setState({ ...state, first_name: e.target.value })} />
+                        <div className="form-group col-xl-12">
+                          <label className="text-secondary"><strong>NAME</strong></label>
+                          <input type="text" formControlName="name" className="form-control" name="state[name]" value={state.name} onChange={e => setState({ ...state, name: e.target.value })} />
                         </div>
-                        <div class="form-group col-xl-6">
+                        {/* <div class="form-group col-xl-6">
                           <label>LAST NAME</label>
                           <input type="text" formControlName="last_name" className="form-control" name="state[last_name]" value={state.last_name} onChange={e => setState({ ...state, last_name: e.target.value })} />
-                        </div>
+                        </div> */}
                       </div>
                       <div className="form-row">
                         <div className="form-group col-xl-6">

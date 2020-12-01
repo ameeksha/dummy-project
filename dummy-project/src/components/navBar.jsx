@@ -3,10 +3,12 @@ import { Button, Modal } from 'react-bootstrap'
 import AddProject from './addProject';
 import AddIssues from './addIssue';
 
-function NavBar() {
-  const url = window.location.pathname;
+function NavBar({ match }) {
+  const url = match
   console.log('url')
   console.log(url)
+  console.log('match')
+  console.log(match)
   const [showModal, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -36,13 +38,7 @@ function NavBar() {
               </Button>
               <AddProject show={showModal} onHide={handleClose}></AddProject>
             </div>
-            : ((url == '/timesheet') ? <div>
-              <Button className="btn-shadow-2" variant="warning" onClick={handleShow}>
-                + Add Issues
-            </Button>
-              <AddIssues show={showModal} onHide={handleClose}></AddIssues>
-            </div>
-              : null)
+            : null
 
         }
       </div>

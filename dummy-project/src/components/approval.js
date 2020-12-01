@@ -9,7 +9,6 @@ const Approval = ({ match }) => {
   const [issues, setIssues] = useState([]);
   const [showModal, setShow] = useState(false);
 
-
   useEffect(() => {
     axios.get(`/issues/${param}`)
       .then(res => {
@@ -26,37 +25,39 @@ const Approval = ({ match }) => {
 
   return (
     <React.Fragment>
+      <div className="ml-5 mr-5">
 
-      <Button className="btn-shadow-2" variant="warning" onClick={handleShow}>
-        + Add Issues
+        <Button className="btn-shadow-2 mb-4" variant="warning" onClick={handleShow}>
+          + Add Issues
             </Button>
-      <AddIssues show={showModal} onHide={handleClose}></AddIssues>
+        <AddIssues projectId={param} show={showModal} onHide={handleClose}></AddIssues>
 
 
-      <table className="table table-bordered table-hover mt-4 " >
-        <thead className="bg-secondary">
-          <tr className="text-center">
-            <th>Issue Name</th>
-            <th>Assignee</th>
-            <th>Reporter</th>
-            <th>Created</th>
-            <th>Updated</th>
-            {/* <th>Phone</th>
+        <table className="table table-bordered table-hover  " >
+          <thead className="bg-secondary">
+            <tr className="text-center">
+              <th>Issue Name</th>
+              <th>Assignee</th>
+              <th>Reporter</th>
+              <th>Created</th>
+              <th>Updated</th>
+              {/* <th>Phone</th>
             <th>Website</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {
-            issues.map(issue => <tr key={issue._id}>
-              <td>{issue.issue_name}</td>
-              <td>{issue.assignee}</td>
-              <td>{issue.reporter}</td>
-              <td>{issue.start_date}</td>
-              <td>{issue.end_date}</td>
-            </tr>)
-          }
-        </tbody>
-      </table>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              issues.map(issue => <tr key={issue._id}>
+                <td>{issue.issue_name}</td>
+                <td>{issue.assignee}</td>
+                <td>{issue.reporter}</td>
+                <td>{issue.start_date}</td>
+                <td>{issue.end_date}</td>
+              </tr>)
+            }
+          </tbody>
+        </table>
+      </div>
     </React.Fragment>
   );
 }

@@ -5,17 +5,13 @@ import { Button, Modal } from 'react-bootstrap';
 const AddIssues = (props) => {
 
   const [state, setState] = useState({
-    project_id: '',
+    project_id: props.projectId,
     issue_name: '',
     description: '',
     start_date: '',
     end_date: '',
     assignee: '',
-    reporter: '',
-    // end_date: '',
-    // project_manager: '',
-    // tech_lead: '',
-    // description: ''
+    reporter: ''
   });
 
   const submitHandler = e => {
@@ -61,11 +57,6 @@ const AddIssues = (props) => {
                 <div className="form" >
                   <div className="card-body">
                     <form onSubmit={submitHandler}>
-                      <div className="form-group col-xl-12">
-                        <label className="text-secondary"><strong>PROJECT ID</strong></label>
-                        <input type="text" formControlName="project_id" className="form-control" name="state[project_id]" value={state.project_id} onChange={e => setState({ ...state, project_id: e.target.value })} />
-
-                      </div>
                       <div className="form-row">
 
                         <div className="form-group col-xl-12">

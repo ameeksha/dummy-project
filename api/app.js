@@ -2,12 +2,12 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const Project = require('./projects');
-const User = require('./users');
 const Issue = require('./issues');
-const Admin = require('./admin')
+const Admin = require('./admins');
+const User = require('./users');
+const Timesheet = require('./timesheet');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-const bcrypt = require('bcrypt');
 
 mongoose.connect('mongodb+srv://ameeksha:oenYSqdvqpYcAXaL@cluster0.1j2uu.mongodb.net/dummy-project?retryWrites=true&w=majority',
     {
@@ -17,12 +17,6 @@ mongoose.connect('mongodb+srv://ameeksha:oenYSqdvqpYcAXaL@cluster0.1j2uu.mongodb
 );
 app.get('/projects', function (req, res) {
     Project.find().then((data) => {
-        res.json(data);
-    })
-});
-
-app.get('/projects/:id', function (req, res) {
-    Project.findById(req.params.id).then((data) => {
         res.json(data);
     })
 });
@@ -47,11 +41,12 @@ app.post('/projects', jsonParser, function (req, res) {
     )
         .catch((error) => console.warn(error))
 })
-// app.get('/projects/:Id', function (req, res) {
-//     Project.find(req.params).then((data) => {
-//         res.json(data);
-//     })
-// });
+app.get('/projects/:id', function (req, res) {
+    Project.findById(req.params.id).then((data) => {
+        res.json(data);
+    })
+});
+
 
 app.get('/users', function (req, res) {
     User.find().then((data) => {
@@ -59,17 +54,28 @@ app.get('/users', function (req, res) {
     })
 });
 
+app.get('/users/:project_id', function (req, res) {
+    User.find(req.params).then((data) => {
+        res.json(data);
+    })
+});
+
+app.get('/user/:_id', function (req, res) {
+    User.find(req.params).then((data) => {
+        res.json(data);
+    })
+});
 
 app.post('/users', jsonParser, function (req, res) {
     const data = new User({
         _id: new mongoose.Types.ObjectId(),
         project_id: req.body.project_id,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        name: req.body.name,
+        // last_name: req.body.last_name,
         email_address: req.body.email_address,
         time_zone: req.body.time_zone,
         shift: req.body.shift,
-        holiday_group: req.body.holiday_group,
+        holiday_group: req.body.holiday_group
 
     });
     data.save().then((result) =>
@@ -77,11 +83,13 @@ app.post('/users', jsonParser, function (req, res) {
     )
         .catch((error) => console.warn(error))
 })
+
 app.get('/projects/:project_id/users', function (req, res) {
     User.find(req.params).then((data) => {
         res.json(data);
     })
 });
+
 
 app.get('/issues', function (req, res) {
     Issue.find().then((data) => {
@@ -119,16 +127,57 @@ app.get('/signup', function (req, res) {
         res.json(data);
     })
 });
+
 app.post('/signup', jsonParser, function (req, res) {
     const data = new Admin({
         _id: new mongoose.Types.ObjectId(),
+        username: req.body.username,
         email: req.body.email,
         password: req.body.password
+    });
+    data.save().then((result) =>
+        res.status(201).json(result)
+    )
+        .catch((error) => console.warn(error))
+});
 
+app.post('/login', jsonParser, function (req, res) {
+    var email = req.body.email;
+    var password = req.body.password;
+    Admin.findOne({ email: email, password: password }, function (err, user) {
+        if (err) {
+            console.log(err)
+            return res.status(500).send();
+        }
+        if (!user) {
+            return res.status(404).send('Incorrect email or password');
+        }
+
+        return res.status(200).send('User logged in');
+    })
+});
+
+app.get('/timesheet/:user_id', function (req, res) {
+    Timesheet.find(req.params).then((data) => {
+        res.json(data);
+    })
+});
+
+app.post('/timesheet', jsonParser, function (req, res) {
+    const data = new Timesheet({
+        _id: new mongoose.Types.ObjectId(),
+        user_id: req.body.user_id,
+        day: req.body.day,
+        date: req.body.date,
+        time_in: req.body.time_in,
+        time_out: req.body.time_out,
+        total_hour: req.body.total_hour
     });
     data.save().then((result) =>
         res.status(201).json(result)
     )
         .catch((error) => console.warn(error))
 })
+
+
 app.listen(10000)
