@@ -5,18 +5,22 @@ import AddUser from './addUser';
 // import CoolTabs from 'react-cool-tabs';
 import { Tabs } from "@feuer/react-tabs";
 import { Redirect, Link } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { fetchProjects } from '../redux/projectDetail/projectDetailActions';
 
 
 
-
-const ProjectDetails = ({ match }) => {
+const ProjectDetails = ({ projectData, fetchProjects, match }) => {
 
     let param = match.params.id;
 
     const [showModal, setShow] = useState(false);
     const [users, setUsers] = useState([]);
-    const [project, setProject] = useState([])
-
+    
+    useEffect(() => {
+        fetchProjects()
+      }, [])
+      
     useEffect(() => {
         axios.get(`/projects/${param}/users`)
             .then(res => {
@@ -28,20 +32,11 @@ const ProjectDetails = ({ match }) => {
             })
     }, [])
 
-    useEffect(() => {
-        axios.get(`/projects/${param}`)
-            .then(res => {
-                console.log(res);
-                setProject(res.data);
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }, [])
-
+    
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+// console.log('projename');
+// console.log(projectData.projects.project_name)
     return (
         <React.Fragment>
             <div className="row m-5">
@@ -81,7 +76,7 @@ const ProjectDetails = ({ match }) => {
                             </div> */}
 
                         <h3 className="text-dark mb-3" ><strong>PROJECT NAME</strong></h3>
-                        <h5 style={{ color: "dodgerblue" }}><strong>{project.project_name}</strong></h5>
+                        <h5 style={{ color: "dodgerblue" }}><strong>{projectData.projects.project_name}</strong></h5>
 
                         <div className="row ">
                             <div className="col-lg-12 mt-5 mb-4">
@@ -105,17 +100,17 @@ const ProjectDetails = ({ match }) => {
                                                     <div className="d-flex">
                                                         <div className="d-inline-block col-md-4 mr-auto text-left">
                                                             <span className="text-dark font-size-12">Name</span>
-                                                            <p style={{ color: "dodgerblue" }}><strong>{project.project_name}</strong></p>
+                                                            <p style={{ color: "dodgerblue" }}><strong>{projectData.projects.project_name}</strong></p>
                                                         </div>
                                                         <div className="divider"></div>
                                                         <div className="d-inline-block col-md-4 mr-auto ml-auto">
                                                             <span className="text-dark font-size-12">Project Manager</span>
-                                                            <p style={{ color: "dodgerblue" }}><strong>{project.project_manager}</strong></p>
+                                                            <p style={{ color: "dodgerblue" }}><strong>{projectData.projects.project_manager}</strong></p>
                                                         </div>
 
                                                         <div className="d-inline-block col-md-4 mr-auto ml-auto ">
                                                             <span className="text-dark font-size-12">Team Lead</span>
-                                                            <p style={{ color: "dodgerblue" }}><strong>{project.tech_lead}</strong></p>
+                                                            <p style={{ color: "dodgerblue" }}><strong>{projectData.projects.tech_lead}</strong></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -124,14 +119,11 @@ const ProjectDetails = ({ match }) => {
                                                 <div>
                                                     <h5><strong>Summery</strong></h5>
                                                 </div>
-                                                <p className="pt-2 text-dark">{project.description}</p>
+                                                <p className="pt-2 text-dark">{projectData.projects.description}</p>
                                             </div>
 
                                         </div>
                                     </Tabs.Tab>
-                                    {/* <Tabs.Tab id="tab2" title="Timesheet">
-                                            <Redirect to={`/timesheet/${param}`} />
-                                        </Tabs.Tab> */}
                                     <Tabs.Tab id="tab3" title="Approval">
                                         <Redirect to={`/main/approval/${param}`} />
                                     </Tabs.Tab>
@@ -155,4 +147,22 @@ const ProjectDetails = ({ match }) => {
     );
 }
 
-export default ProjectDetails;
+const mapStateToProps = (state) => {
+    return {
+        // pt: ownProps.match.path,
+      projectData: state.project
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch, {match}) => {
+    const mat = match.params.id;
+   
+    return {
+      fetchProjects: () => dispatch(fetchProjects(mat))
+    }
+  }
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ProjectDetails) ;

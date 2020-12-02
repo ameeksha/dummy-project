@@ -16,8 +16,6 @@ function NavBar({ match }) {
 
   return (
     <nav className="navbar navbar-expand-sm bg-dark navbar-dark" style={{ height: 100 }}>
-      {/* <a className="navbar-brand" href='#' style={{ fontWeight: 600 }} >Bestpeers</a> */}
-
       <ul className="navbar-nav ml-5">
         <li className="nav-item">
           <a className="nav-link" href="/dashboard">Dashboard</a>
@@ -26,9 +24,6 @@ function NavBar({ match }) {
           <a className="nav-link" href="/projects">Projects</a>
         </li>
       </ul>
-
-
-
       <div class="ml-auto">
         {
           (url == '/projects') ?
@@ -39,7 +34,6 @@ function NavBar({ match }) {
               <AddProject show={showModal} onHide={handleClose}></AddProject>
             </div>
             : null
-
         }
       </div>
     </nav>

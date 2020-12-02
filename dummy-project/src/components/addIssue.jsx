@@ -17,7 +17,6 @@ const AddIssues = (props) => {
   const submitHandler = e => {
     e.preventDefault();
     console.log(state);
-    // props.addAlbum(state)
     axios.post('/issues', state)
       .then(response => {
         console.log(response);

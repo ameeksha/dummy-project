@@ -16,7 +16,6 @@ const AddUser = (props) => {
   const submitHandler = e => {
     e.preventDefault();
     console.log(state);
-    // props.addAlbum(state)
     axios.post('/users', state)
       .then(response => {
         console.log(response);
@@ -45,33 +44,19 @@ const AddUser = (props) => {
         <Modal.Title><strong>Add New User</strong></Modal.Title>
       </Modal.Header>
       <Modal.Body>
-
-
-
         <div className="block">
           <div className="row">
             <div className="col-xl-12">
               <div className="inner">
                 <div className="form" >
-
                   <div className="card-body">
                     <form onSubmit={submitHandler}>
-
-
-
                       <input type="hidden" formControlName="project_id" className="form-control" name="state[project_id]" value={state.project_id} onChange={e => setState({ ...state, project_id: e.target.value })} />
-
-
                       <div className="form-row">
-
                         <div className="form-group col-xl-12">
                           <label className="text-secondary"><strong>NAME</strong></label>
                           <input type="text" formControlName="name" className="form-control" name="state[name]" value={state.name} onChange={e => setState({ ...state, name: e.target.value })} />
                         </div>
-                        {/* <div class="form-group col-xl-6">
-                          <label>LAST NAME</label>
-                          <input type="text" formControlName="last_name" className="form-control" name="state[last_name]" value={state.last_name} onChange={e => setState({ ...state, last_name: e.target.value })} />
-                        </div> */}
                       </div>
                       <div className="form-row">
                         <div className="form-group col-xl-6">

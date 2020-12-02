@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import AddTimesheet from './addTimesheet';
-
 import { Link } from 'react-router-dom';
 
 const Timesheet = ({ match }) => {
@@ -38,11 +37,6 @@ const Timesheet = ({ match }) => {
   const handleShow = () => setShow(true);
 
   return (
-
-
-
-
-
     <React.Fragment>
       <div className="ml-5 mr-5">
         <Button className="btn-shadow-2 mb-4" variant="warning" onClick={handleShow}>
@@ -88,11 +82,6 @@ const Timesheet = ({ match }) => {
     </React.Fragment>
 
   );
-
-
-
-
-
 }
 
 export default Timesheet;

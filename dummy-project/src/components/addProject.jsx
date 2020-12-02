@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
-
+import { connect } from 'react-redux';
+import { addProject } from '../redux/project/projectActions';
 
 const AddProject = (props) => {
-
-
 
   const [state, setState] = useState({
     project_name: '',
@@ -23,15 +22,7 @@ const AddProject = (props) => {
   const submitHandler = e => {
     e.preventDefault();
     console.log(state);
-    // props.addAlbum(state)
-    axios.post('/projects', state)
-      .then(response => {
-        console.log(response);
-        alert('New Project Added');
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    props.addProject(state)
     setState({
       project_name: '',
       project_code: '',
@@ -59,26 +50,11 @@ const AddProject = (props) => {
         <Modal.Title><strong>Add New Project</strong></Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {/* <div>
-          <form onSubmit={submitHandler}  >
-            <div className="form-group">
-              <input className="form-controll" type='hidden' placeholder="Enter userId" name='state[userId]' value={state.userId} onChange={e => setState({ ...state, userId: e.target.value })} />
-            </div>
-            <div className="form-group">
-              <input className="form-controll" type="text" placeholder="Enter title" name="state[title]" value={state.title} onChange={e => setState({ ...state, title: e.target.value })} />
-            </div>
-            <button type="submit">Add</button>
-          </form>
-        </div> */}
-
-
-
         <div className="block">
           <div className="row">
             <div className="col-xl-12">
               <div className="inner">
                 <div className="form" >
-
                   <div className="card-body">
                     <form onSubmit={submitHandler}>
                       <div className="form-row">
@@ -149,6 +125,6 @@ const AddProject = (props) => {
   );
 }
 
-export default AddProject;
+export default connect(null, { addProject })(AddProject);
 
 
